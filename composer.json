@@ -1,0 +1,24 @@
+{
+  "name": "dr-bock/git-changelog",
+  "description": "(Markdown) changelog generator from git history",
+  "type": "library",
+  "license": "GPL-3.0",
+  "keywords": ["changelog", "git"],
+  "version": "0.2-beta",
+  "authors": [
+    {
+      "name": "Nikolaj Wojtkowiak-Pfänder",
+      "email": "nwp@dr-bock.dev",
+      "homepage": "https://dr-bock.dev",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "autoload": {
+    "psr-4": {
+     "DrBock\\GitChangeLog\\" : "src/"
+    }
+  }
+}
