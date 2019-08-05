@@ -158,7 +158,6 @@ class Commit
     public function setOriginalMessage(string $originalMessage): void
     {
         $this->originalMessage = $originalMessage;
-        $this->setCommitTypeAndMessageFromOriginalMessage();
     }
 
     /**
@@ -223,53 +222,5 @@ class Commit
     public function setTicketNo(string $ticketNo): void
     {
         $this->ticketNo = $ticketNo;
-    }
-
-    /**
-     * parses the commitType from commit message
-     */
-    protected function setCommitTypeAndMessageFromOriginalMessage(): void
-    {
-        $messageParts = explode(':', $this->getOriginalMessage(), 2);
-        $subject = trim($messageParts[1]);
-        switch(strtolower($messageParts[0])) {
-            case 'new':
-            case 'added':
-                $type = self::TYPE_NEW;
-                break;
-            case 'changed':
-            case 'change':
-                $type = self::TYPE_CHANGED;
-                break;
-            case 'fixed':
-            case 'fix':
-            case 'bugfix':
-                $type = self::TYPE_FIXED;
-                break;
-            case 'refactored':
-            case 'refactor':
-                $type = self::TYPE_REFACTORED;
-                break;
-            case 'deprecated':
-                $type = self::TYPE_DEPRECATED;
-                break;
-            case 'removed':
-            case 'remove':
-            case 'deleted':
-            case 'delete':
-            case 'cleanup':
-            case 'revert':
-                $type = self::TYPE_REMOVED;
-                break;
-            case 'follow up':
-                $type = self::TYPE_FOLLOWUP;
-                break;
-            default:
-                $type = self::TYPE_OTHER;
-                $subject = trim($this->getOriginalMessage());
-                break;
-        }
-        $this->setType($type);
-        $this->setSubject($subject);
     }
 }
