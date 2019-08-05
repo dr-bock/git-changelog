@@ -4,7 +4,6 @@
   "type": "library",
   "license": "GPL-3.0",
   "keywords": ["changelog", "git"],
-  "version": "0.2-beta",
   "authors": [
     {
       "name": "Nikolaj Wojtkowiak-Pfänder",
