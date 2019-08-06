@@ -54,7 +54,7 @@ Add this script to your projects composer.json:
 A changelog can now be generated with the following command (in the root directory of your composer project):
 
 ```
-composer git-changelog -- releaseDate=2019-08-01 releaseName="My cool new Feature Relese" fromTag="release-2019-07-01" 
+composer generate-changelog -- releaseDate=2019-08-01 releaseName="My cool new Feature Relese" fromTag="release-2019-07-01" 
 ```
 
 Options overview:

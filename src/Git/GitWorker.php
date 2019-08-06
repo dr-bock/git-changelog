@@ -159,9 +159,10 @@ class GitWorker
             $commit->setOriginalMessage(trim($message));
             $commit->setBody(trim($body));
 
-            $helperResult = IssueFormatHelper::getTicketNumberAndSubject($this->issueFormat, $commit->getSubject());
+            $helperResult = IssueFormatHelper::parseCommitMessage(trim($message), $this->issueFormat);
             $commit->setSubject($helperResult['subject']);
-            $commit->setTicketNo($helperResult['ticketNo']);
+            $commit->setTicketNo($helperResult['issue']);
+            $commit->setType($this->mapCommitType($helperResult['type']));
 
             $parsedHistory[] = $commit;
         }
@@ -176,5 +177,53 @@ class GitWorker
     public function getCommitListFromHistory($history): array
     {
         return explode(self::COMMIT_SEPARATOR, trim($history));
+    }
+
+
+    /**
+     * maps the commit type
+     *
+     * @param $originalType
+     * @return string
+     */
+    protected function mapCommitType($originalType): string
+    {
+        switch(strtolower($originalType)) {
+            case 'new':
+            case 'added':
+                $type = Commit::TYPE_NEW;
+                break;
+            case 'changed':
+            case 'change':
+                $type = Commit::TYPE_CHANGED;
+                break;
+            case 'fixed':
+            case 'fix':
+            case 'bugfix':
+                $type = Commit::TYPE_FIXED;
+                break;
+            case 'refactored':
+            case 'refactor':
+                $type = Commit::TYPE_REFACTORED;
+                break;
+            case 'deprecated':
+                $type = Commit::TYPE_DEPRECATED;
+                break;
+            case 'removed':
+            case 'remove':
+            case 'deleted':
+            case 'delete':
+            case 'cleanup':
+            case 'revert':
+                $type = Commit::TYPE_REMOVED;
+                break;
+            case 'follow up':
+                $type = Commit::TYPE_FOLLOWUP;
+                break;
+            default:
+                $type = Commit::TYPE_OTHER;
+                break;
+        }
+        return $type;
     }
 }
