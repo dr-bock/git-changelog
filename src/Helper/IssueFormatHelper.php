@@ -84,6 +84,10 @@ class IssueFormatHelper
                 $type =$subjectParts[0];
                 $subject = $subjectParts[1];
             }
+        } elseif (count($messageParts) === 1) {
+            $parts = explode(':', $messageParts[0], 2);
+            $type = count($parts) === 2 ? $parts[0] : Commit::TYPE_OTHER;
+            $subject = count($parts) === 2 ? $parts[1] : $parts[0];
         } elseif (preg_match('/^' . $pattern . '/', $messageParts[1]) === 1) {
             // Issue in the middle
             $issue = $messageParts[1];
@@ -101,12 +105,7 @@ class IssueFormatHelper
                 $type = $typeParts[0];
                 $subject = substr($message, strlen($type));
             }
-        } elseif (count($messageParts) === 1) {
-            $parts = explode(':', $messageParts[0], 2);
-            $type = count($parts) === 2 ? $parts[0] : Commit::TYPE_OTHER;
-            $subject = count($parts) === 2 ? $parts[1] : $parts[0];
-        }
-        else {
+        } else {
             $subject = $message;
         }
 
