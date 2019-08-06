@@ -38,7 +38,7 @@ class GeneratorCommand
             ->setProjectName($event->getComposer()->getPackage()->getName())
             ->setChangelogFolder($composerConfig['changelogFolder'])
             ->setIssueUrl($composerConfig['issueUrl'])
-            ->setCommitUrl($composerConfig['issueUrl'])
+            ->setCommitUrl($composerConfig['commitUrl'])
             ->setIssueFormat($composerConfig['issueFormat'])
             ->setOutputFormat(MarkdownOutputAdapter::FORMAT);
 
