@@ -60,6 +60,12 @@ class GeneratorCommand
         if (isset($arguments['releaseName'])) {
             $generatorOptions->setReleaseName($arguments['releaseName']);
         }
+        if (isset($arguments['sorting'])) {
+            if (!\in_array(strtoupper($arguments['sorting']), ['ASC', 'DESC'])) {
+                throw new \Exception('Please specify a valid sorting value: ASC or DESC');
+            }
+            $generatorOptions->setSorting(strtoupper($arguments['sorting']));
+        }
         if (isset($arguments['dryRun'])) {
             $generatorOptions->setDryRun(true);
         }
@@ -75,7 +81,7 @@ class GeneratorCommand
      */
     protected static function parseArguments($arguments = []): array
     {
-        $allowedArguments = ['fromDate', 'toDate', 'fromTag', 'releaseName', 'releaseDate', 'dryRun'];
+        $allowedArguments = ['fromDate', 'toDate', 'fromTag', 'releaseName', 'releaseDate', 'dryRun', 'sorting'];
 
         $parsedArguments = [];
         foreach ($arguments as $argumentString) {

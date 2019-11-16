@@ -84,6 +84,11 @@ class GeneratorOptions
     private $changelogFolder = '';
 
     /**
+     * @var string
+     */
+    private $sorting = 'ASC';
+
+    /**
      * @var bool
      */
     private $addFileToGit = true;
@@ -306,6 +311,24 @@ class GeneratorOptions
     public function setChangelogFolder(string $changelogFolder): self
     {
         $this->changelogFolder = $changelogFolder;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSorting(): string
+    {
+        return $this->sorting;
+    }
+
+    /**
+     * @param string $sorting
+     * @return GeneratorOptions
+     */
+    public function setSorting(string $sorting): self
+    {
+        $this->sorting = $sorting;
         return $this;
     }
 
