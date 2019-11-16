@@ -73,7 +73,7 @@ class ChangeLogGenerator
         );
 
         $this->outputAdapter = OutputFactory::getAdapter($this->getGeneratorOptions()->getOutputFormat());
-        $this->outputAdapter->setGroupedCommits($this->groupCommits($commits));
+        $this->outputAdapter->setGroupedCommits($this->groupCommits($commits, $this->getGeneratorOptions()->getSorting()));
         $this->outputAdapter->setGeneratorOptions($this->getGeneratorOptions());
 
         if ($this->getGeneratorOptions()->isDryRun() === true) {
@@ -93,9 +93,10 @@ class ChangeLogGenerator
 
     /**
      * @param Commit[] $commits
+     * @param string $sorting
      * @return array
      */
-    protected function groupCommits($commits): array
+    protected function groupCommits($commits, $sorting): array
     {
         $groupedCommits = [
             Commit::TYPE_NEW => [],
@@ -107,6 +108,15 @@ class ChangeLogGenerator
             Commit::TYPE_FOLLOWUP => [],
             Commit::TYPE_OTHER => []
         ];
+        if ($sorting === 'ASC') {
+            usort($commits, static function (Commit $a, Commit $b) {
+                return ($a->getTimestamp() <=> $b->getTimestamp());
+            });
+        } else {
+            usort($commits, static function (Commit $a, Commit $b) {
+                return -($a->getTimestamp() <=> $b->getTimestamp());
+            });
+        }
         foreach ($commits as $commit) {
             $groupedCommits[$commit->getType()][] = $commit;
         }

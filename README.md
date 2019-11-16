@@ -66,6 +66,7 @@ Options overview:
 |fromTag|If a tag is specified, the changelog is only created from the commits created after this git tag (revision). Ideally the tag of the last release should be used here.|optional|
 |fromDate|In addition, the selection of commits used to create the changelog can be restricted by a start date. Format: 2019-08-24|optional|
 |toDate|In addition, the selection of commits used to create the changelog can be restricted by an end date. Format: 2019-08-24|optional|
+|sorting|Specify the sorting of the commits in changelog. ASC (default) or DESC.|optional|
 |dryRun|If set, no files are written and the result is only displayed in the console.|optional|
 
 #### ...as php library
